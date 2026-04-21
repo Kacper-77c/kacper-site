@@ -1,0 +1,19 @@
+Zawsze konsultuj docs/design-system.md przed zmianami UI.
+
+North Star: "Gabinet projektanta etykiet zapałczanych z 1963 roku, 
+w którym ktoś postawił terminal vim."
+
+HARD RULES:
+- Primary accent = bottle green (#2D6A4F). Jedyny kolor aktywny (CTA, linki, hover).
+- Trzy fonty: Fraunces (display + body), Archivo (UI + metadata), IBM Plex Mono (numery + kody).
+- Każda sekcja = "scenic box" (kolor wewnątrz, krem papieru wokół).
+- Wertykalne metadane biegną po krawędziach sekcji.
+- Ilustracje: silhouette + one-plane-color, styl etykiet zapałczanych 1958-72.
+- Stempel (StampButton) jako primary CTA, nie default Tailwind button.
+
+ZAKAZY:
+- Inter, Roboto, DM Sans, Space Grotesk, Playfair Display.
+- Purple/blue gradients, glassmorphism, neumorphism.
+- Lucide icons bez modyfikacji.
+- shadcn components w default stylingu.
+- Hero carousels, parallax wszędzie.
