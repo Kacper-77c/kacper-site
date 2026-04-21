@@ -101,19 +101,48 @@ export function Hero() {
         </div>
 
         <motion.div
-          className="flex items-center justify-center min-h-[320px] md:min-h-[420px] lg:min-h-[600px]"
+          className="flex flex-col items-center justify-center min-h-[320px] md:min-h-[420px] lg:min-h-[600px]"
           {...reveal({ delay: 400, duration: 800, scale: 0.95 })}
         >
           <AsciiTorus className="max-w-sm md:max-w-md" />
+          <div className="flex items-center justify-center mt-4 font-mono text-[11px] text-earth tracking-wide">
+            <span>FIG. 01 · TOROID PARAMETRYCZNY</span>
+            <span className="mx-3 opacity-40">·</span>
+            <span className="hidden md:block opacity-70 animate-pulse motion-reduce:animate-none">
+              PORUSZ KURSOREM
+            </span>
+            <span className="block md:hidden opacity-70">STATYCZNY RENDER</span>
+          </div>
         </motion.div>
       </div>
 
       <motion.div
-        className="absolute bottom-8 right-6 md:right-20 font-archivo text-xs uppercase tracking-[0.08em] text-earth"
+        className="absolute bottom-16 right-6 md:right-20 font-archivo text-xs uppercase tracking-[0.08em] text-earth"
         {...reveal({ delay: 1500, duration: 400 })}
       >
         egz. 1/1 · PN-26
       </motion.div>
+      <motion.button
+        onClick={() => {
+          document.getElementById("warsztat")?.scrollIntoView({
+            behavior: "smooth",
+          });
+        }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 font-archivo text-[11px] uppercase tracking-[0.12em] text-earth hover:text-stamp transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stamp focus-visible:ring-offset-4 focus-visible:ring-offset-paper rounded-sm p-2"
+        aria-label="Przewiń do sekcji warsztat"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2, duration: 0.8 }}
+      >
+        <span>Niżej · Warsztat</span>
+        <motion.span
+          animate={prefersReducedMotion ? undefined : { y: [0, 6, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          aria-hidden="true"
+        >
+          ↓
+        </motion.span>
+      </motion.button>
     </section>
   );
 }

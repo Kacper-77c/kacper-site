@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 interface MastheadProps {
   className?: string;
+  nextSlot?: string;
 }
 
 const navLinks = [
@@ -15,7 +16,7 @@ const navLinks = [
   { href: "#zamowienie", label: "zamówienie" },
 ];
 
-export function Masthead({ className }: MastheadProps) {
+export function Masthead({ className, nextSlot = "28.04.2026" }: MastheadProps) {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -66,6 +67,14 @@ export function Masthead({ className }: MastheadProps) {
       >
         Kacper Krawczyk
       </a>
+
+      <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-2 font-archivo text-xs uppercase tracking-[0.08em] text-earth">
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full rounded-full bg-stamp opacity-60 animate-ping motion-reduce:animate-none" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-stamp" />
+        </span>
+        <span>{`W PRACOWNI · NASTĘPNY TERMIN: ${nextSlot}`}</span>
+      </div>
 
       <nav className="hidden md:flex items-center gap-2 font-archivo text-[13px] text-earth">
         {navLinks.map((link, index) => (
