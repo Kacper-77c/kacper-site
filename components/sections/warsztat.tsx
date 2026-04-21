@@ -6,8 +6,8 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSection } from "@/components/layout/scroll-section";
-import { TorusSeal } from "@/components/ui/torus-seal";
 import { HandUnderline } from "@/components/ui/hand-underline";
+import { DeskScene } from "./warsztat/desk-scene";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,13 +46,9 @@ export function Warsztat() {
       transition="hard"
       verticalMetaSegments={["KK-02", "WARSZTAT", "PRACOWNIA", "WROCŁAW", "2026"]}
     >
-      <div className="absolute top-16 right-4 md:top-24 md:right-16 z-10 opacity-90">
-        <TorusSeal size="md" dark />
-      </div>
-
       <div
         ref={containerRef}
-        className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-start min-h-[calc(100vh-12rem)]"
+        className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 items-center min-h-[calc(100vh-14rem)]"
       >
         <div className="flex flex-col justify-center max-w-3xl pt-8 md:pt-16">
           <h2
@@ -98,8 +94,15 @@ export function Warsztat() {
           </motion.div>
         </div>
 
-        {/* TODO: Kacper — sesja 1.5, interaktywny CRT TV w prawej kolumnie */}
-        <div className="hidden lg:block w-[400px]" aria-hidden="true" />
+        <motion.div
+          className="hidden lg:flex items-center justify-center w-full pt-8"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, delay: 0.8 }}
+        >
+          <DeskScene />
+        </motion.div>
       </div>
     </ScrollSection>
   );
