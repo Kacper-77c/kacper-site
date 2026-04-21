@@ -14,6 +14,7 @@ interface AsciiTorusProps {
 function TorusKnot() {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterialParameters | null>(null);
+  const globalMouse = useRef({ x: 0, y: 0 });
   const mouseState = useRef({
     point: new THREE.Vector3(),
     distortion: 0,
@@ -65,10 +66,19 @@ function TorusKnot() {
     return mat;
   }, []);
 
+  useEffect(() => {
+    const handleGlobalMouse = (event: MouseEvent) => {
+      globalMouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+      globalMouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", handleGlobalMouse);
+    return () => window.removeEventListener("mousemove", handleGlobalMouse);
+  }, []);
+
   useFrame((state, delta) => {
     if (!meshRef.current) return;
-    meshRef.current.rotation.x += delta * 0.08;
-    meshRef.current.rotation.y += delta * 0.1;
+    meshRef.current.rotation.x += delta * 0.08 + globalMouse.current.y * delta * 0.15;
+    meshRef.current.rotation.y += delta * 0.1 + globalMouse.current.x * delta * 0.15;
 
     const target = mouseState.current.isOverMesh ? 1.0 : 0.0;
     const decay = target > mouseState.current.distortion ? 0.2 : 0.05;
@@ -142,7 +152,7 @@ export function AsciiTorus({ className }: AsciiTorusProps) {
   }
 
   return (
-    <div aria-hidden="true" className={cn("w-full h-full min-h-[500px]", className)}>
+    <div aria-hidden="true" className={cn("w-full h-full aspect-square max-h-[70vh]", className)}>
       <Canvas camera={{ position: [0, 0, 4.5], fov: 50 }}>
         <ambientLight intensity={0.15} />
         <directionalLight position={[5, 5, 5]} intensity={1.8} />

@@ -55,13 +55,13 @@ export function Hero() {
         <RoundStamp size="md" topText="K·K" bottomText="Zał. 2026" />
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[60%_40%] lg:grid-cols-[55%_45%] gap-12 mt-24 md:mt-32 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-[60%_40%] lg:grid-cols-[55%_45%] gap-12 max-w-7xl mx-auto items-center min-h-[calc(100vh-8rem)]">
         <div className="flex flex-col justify-center">
           <motion.div {...reveal({ delay: 0, duration: 400, y: 8 })}>
             <SectionNumber number="01" label="WITRYNA" />
           </motion.div>
 
-          <h1 className="fraunces-display text-[clamp(56px,11vw,168px)] leading-[0.92] mt-8 mb-8 tracking-tight text-ink">
+          <h1 className="fraunces-display text-[clamp(52px,9vw,140px)] leading-[0.95] mt-8 mb-8 text-ink">
             <motion.span className="block" {...reveal({ delay: 100, duration: 600, y: 20 })}>
               Strony,
             </motion.span>
@@ -101,7 +101,7 @@ export function Hero() {
         </div>
 
         <motion.div
-          className="flex flex-col items-center justify-center min-h-[500px] md:min-h-[700px] w-full"
+          className="flex flex-col items-center justify-center h-full w-full"
           {...reveal({ delay: 400, duration: 800, scale: 0.95 })}
         >
           <AsciiTorus className="w-full h-full" />
