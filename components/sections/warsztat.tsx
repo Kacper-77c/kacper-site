@@ -7,7 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSection } from "@/components/layout/scroll-section";
 import { HandUnderline } from "@/components/ui/hand-underline";
-import { DeskScene } from "./warsztat/desk-scene";
+import { TerminalLog } from "./warsztat/terminal-log";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -95,13 +95,13 @@ export function Warsztat() {
         </div>
 
         <motion.div
-          className="hidden lg:flex items-center justify-center w-full pt-8"
+          className="hidden lg:flex items-center justify-center w-full"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1, delay: 0.8 }}
         >
-          <DeskScene />
+          <TerminalLog />
         </motion.div>
       </div>
     </ScrollSection>

@@ -77,52 +77,8 @@
     animation: blink 1s step-end infinite;
   }
 
-  @keyframes steam-rise {
-    0% {
-      opacity: 0;
-      transform: translateY(0) scaleX(1);
-    }
-    30% {
-      opacity: 0.6;
-      transform: translateY(-8px) scaleX(1.1);
-    }
-    70% {
-      opacity: 0.3;
-      transform: translateY(-16px) scaleX(0.9);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-24px) scaleX(1.2);
-    }
-  }
-
-  .animate-steam {
-    animation: steam-rise 3s ease-out infinite;
-  }
-
-  @keyframes coffee-drip {
-    0%, 70% {
-      transform: translateY(0);
-      opacity: 0;
-    }
-    75% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(30px);
-      opacity: 0;
-    }
-  }
-
-  .animate-coffee-drip {
-    animation: coffee-drip 6s ease-in infinite;
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .animate-blink,
-    .animate-steam,
-    .animate-coffee-drip {
+    .animate-blink {
       animation: none;
     }
   }
