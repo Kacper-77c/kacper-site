@@ -56,7 +56,13 @@ export function Masthead({ className, nextSlot = "28.04.2026" }: MastheadProps) 
   }, [open]);
 
   return (
-    <header className={cn("relative z-30 h-[50px] md:h-[60px] flex items-center justify-between", className)}>
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full bg-paper/80 backdrop-blur-sm px-6 md:px-20 py-4 border-b border-earth/10",
+        className
+      )}
+    >
+      <div className="relative h-[50px] md:h-[60px] flex items-center justify-between">
       <a
         href="#"
         className={cn(
@@ -139,6 +145,7 @@ export function Masthead({ className, nextSlot = "28.04.2026" }: MastheadProps) 
           </motion.div>
         ) : null}
       </AnimatePresence>
+      </div>
     </header>
   );
 }
