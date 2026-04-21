@@ -33,7 +33,7 @@ export function DeskSVG() {
           }
           .coffee-spill {
             fill: var(--color-earth);
-            opacity: 0.5;
+            opacity: 0.85;
           }
           .paper-tint {
             fill: var(--color-earth);
@@ -65,23 +65,29 @@ export function DeskSVG() {
 
       <path
         className="hand-drawn"
-        d="M 560 310 L 555 370 L 595 370 L 590 310 M 555 370 L 540 385 L 610 385 L 595 370"
+        d="M 560 310 L 555 400 L 595 400 L 590 310 M 555 400 L 535 428 L 615 428 L 595 400"
       />
 
-      <path className="hand-drawn" d="M 420 395 L 650 390 L 660 420 L 410 425 Z" />
+      <path className="hand-drawn" d="M 450 440 L 670 435 L 685 475 L 435 480 Z" />
       <path
         className="hand-drawn-thin"
-        d="M 430 402 L 645 398 M 430 410 L 645 406 M 430 418 L 645 414"
-        opacity="0.4"
+        d="M 460 450 L 670 446 M 460 460 L 670 456 M 460 470 L 670 466"
+        opacity="0.5"
+      />
+      <path
+        className="hand-drawn-thin"
+        d="M 490 447 L 490 472 M 530 446 L 530 472 M 570 445 L 570 471 
+       M 610 444 L 610 470 M 650 443 L 650 469"
+        opacity="0.3"
       />
 
       <path
         className="hand-drawn"
-        d="M 230 340 L 225 420 Q 225 428 233 428 L 297 428 Q 305 428 305 420 L 300 340 Z"
+        d="M 238 370 L 235 425 Q 235 432 242 432 L 288 432 Q 295 432 295 425 L 292 370 Z"
       />
-      <ellipse cx="265" cy="340" rx="37" ry="6" className="hand-drawn" />
-      <path className="hand-drawn" d="M 305 355 Q 330 358 330 380 Q 330 402 305 405" />
-      <ellipse cx="265" cy="345" rx="32" ry="4" className="coffee-spill" />
+      <ellipse cx="265" cy="370" rx="28" ry="5" className="hand-drawn" />
+      <path className="hand-drawn" d="M 295 382 Q 315 384 315 400 Q 315 416 295 418" />
+      <ellipse cx="265" cy="374" rx="24" ry="3" className="coffee-spill" />
 
       <g className="animate-steam" style={{ transformOrigin: "265px 340px" }}>
         <path
@@ -103,26 +109,29 @@ export function DeskSVG() {
 
       <path
         className="coffee-spill"
-        d="M 200 435 Q 180 432 170 445 Q 160 458 175 470 Q 195 478 215 465 Q 225 450 210 438 Q 205 434 200 435 Z"
+        d="M 170 445 Q 145 442 135 458 Q 125 475 150 485 Q 180 490 200 478 Q 215 465 200 448 Q 185 442 170 445 Z"
       />
-      <ellipse cx="155" cy="462" rx="8" ry="4" className="coffee-spill" />
+      <ellipse cx="125" cy="482" rx="10" ry="5" className="coffee-spill" />
+      <ellipse cx="220" cy="490" rx="5" ry="3" className="coffee-spill" opacity="0.6" />
 
-      <g className="animate-coffee-drip" style={{ transformOrigin: "195px 435px" }}>
-        <ellipse cx="195" cy="435" rx="2.5" ry="4" className="coffee-spill" />
+      <g className="animate-coffee-drip" style={{ transformOrigin: "165px 448px" }}>
+        <ellipse cx="165" cy="448" rx="3" ry="5" className="coffee-spill" />
       </g>
 
-      <path className="hand-drawn" d="M 340 370 L 335 430 L 415 428 L 420 368 Z" />
-      <path className="hand-drawn" d="M 378 369 L 377 429" />
-      <path className="paper-tint" d="M 340 370 L 335 430 L 377 429 L 378 369 Z" />
-      <path className="paper-tint" d="M 378 369 L 377 429 L 415 428 L 420 368 Z" />
+      <path className="hand-drawn" d="M 325 355 L 320 430 L 425 428 L 428 353 Z" />
+      <path className="hand-drawn" d="M 376 354 L 374 429" />
+      <path className="paper-tint" d="M 325 355 L 320 430 L 374 429 L 376 354 Z" />
+      <path className="paper-tint" d="M 376 354 L 374 429 L 425 428 L 428 353 Z" />
       <path
         className="hand-drawn-thin"
-        d="M 345 385 L 372 384 M 345 395 L 370 393 M 345 405 L 368 404"
+        d="M 332 375 L 368 374 M 332 388 L 365 387 M 332 401 L 362 400 
+       M 332 414 L 366 413"
         opacity="0.5"
       />
       <path
         className="hand-drawn-thin"
-        d="M 385 383 L 410 381 M 385 393 L 408 392 M 385 403 L 412 401 M 385 413 L 405 411"
+        d="M 384 373 L 420 371 M 384 386 L 418 385 M 384 399 L 422 397 
+       M 384 412 L 416 411"
         opacity="0.5"
       />
 
