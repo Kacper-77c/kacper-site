@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { AsciiRenderer } from "@react-three/drei";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
@@ -14,15 +14,11 @@ interface AsciiTorusProps {
 function TorusKnot() {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterialParameters | null>(null);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const mouseState = useRef({
     point: new THREE.Vector3(),
     distortion: 0,
-    targetDistortion: 0,
+    isOverMesh: false,
   });
-  const { camera, scene } = useThree();
-  const raycaster = useRef(new THREE.Raycaster());
-  const pointer = useRef(new THREE.Vector2());
 
   const material = useMemo(() => {
     const mat = new THREE.MeshPhongMaterial({
@@ -52,14 +48,14 @@ function TorusKnot() {
            #include <begin_vertex>
            vec4 worldPosition = modelMatrix * vec4(transformed, 1.0);
            float dist = distance(worldPosition.xyz, uMouse);
-           float influence = smoothstep(1.2, 0.0, dist) * uDistortion;
+           float influence = smoothstep(0.5, 0.0, dist) * uDistortion;
            
            float noise = sin(position.x * 15.0 + uTime * 3.0) * 
                          cos(position.y * 15.0 + uTime * 2.0) * 
                          sin(position.z * 15.0 + uTime * 4.0);
            
-           transformed += normal * influence * 0.12;
-           transformed += normal * noise * influence * 0.08;
+           transformed += normal * influence * 0.06;
+           transformed += normal * noise * influence * 0.05;
            `
         );
 
@@ -69,46 +65,14 @@ function TorusKnot() {
     return mat;
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      pointer.current.x = (event.clientX / window.innerWidth) * 2 - 1;
-      pointer.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
-      mouseState.current.targetDistortion = 1.0;
-      setMouse({
-        x: (event.clientX / window.innerWidth) * 2 - 1,
-        y: (event.clientY / window.innerHeight) * 2 - 1,
-      });
-    };
-    const handleMouseLeave = () => {
-      mouseState.current.targetDistortion = 0;
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseleave", handleMouseLeave);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, []);
-
   useFrame((state, delta) => {
     if (!meshRef.current) return;
-    if (!scene) return;
+    meshRef.current.rotation.x += delta * 0.08;
+    meshRef.current.rotation.y += delta * 0.1;
 
-    meshRef.current.rotation.x += delta * 0.08 + mouse.y * delta * 0.3;
-    meshRef.current.rotation.y += delta * 0.1 + mouse.x * delta * 0.3;
-
-    raycaster.current.setFromCamera(pointer.current, camera);
-    const intersects = raycaster.current.intersectObject(meshRef.current);
-    if (intersects.length > 0) {
-      mouseState.current.point.copy(intersects[0].point);
-    }
-
-    const decay =
-      mouseState.current.targetDistortion > mouseState.current.distortion ? 0.15 : 0.04;
-    mouseState.current.distortion +=
-      (mouseState.current.targetDistortion - mouseState.current.distortion) * decay;
-    mouseState.current.targetDistortion *= 0.92;
+    const target = mouseState.current.isOverMesh ? 1.0 : 0.0;
+    const decay = target > mouseState.current.distortion ? 0.2 : 0.05;
+    mouseState.current.distortion += (target - mouseState.current.distortion) * decay;
 
     const shader = materialRef.current as any;
     if (shader?.uniforms) {
@@ -119,7 +83,18 @@ function TorusKnot() {
   });
 
   return (
-    <mesh ref={meshRef} material={material}>
+    <mesh
+      ref={meshRef}
+      material={material}
+      onPointerMove={(event) => {
+        event.stopPropagation();
+        mouseState.current.point.copy(event.point);
+        mouseState.current.isOverMesh = true;
+      }}
+      onPointerOut={() => {
+        mouseState.current.isOverMesh = false;
+      }}
+    >
       <torusKnotGeometry args={[1, 0.4, 200, 48, 2, 3]} />
     </mesh>
   );
