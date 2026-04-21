@@ -29,13 +29,13 @@ function TorusKnot() {
 
   useFrame((_, delta) => {
     if (!meshRef.current) return;
-    meshRef.current.rotation.x += delta * 0.15 + mouse.y * delta * 0.5;
-    meshRef.current.rotation.y += delta * 0.2 + mouse.x * delta * 0.5;
+    meshRef.current.rotation.x += delta * 0.08 + mouse.y * delta * 0.3;
+    meshRef.current.rotation.y += delta * 0.1 + mouse.x * delta * 0.3;
   });
 
   return (
     <mesh ref={meshRef}>
-      <torusKnotGeometry args={[1, 0.3, 128, 32, 2, 3]} />
+      <torusKnotGeometry args={[1, 0.4, 200, 48, 2, 3]} />
       <meshPhongMaterial color="#2D6A4F" shininess={80} specular="#ffffff" />
     </mesh>
   );
@@ -84,7 +84,7 @@ export function AsciiTorus({ className }: AsciiTorusProps) {
 
   return (
     <div aria-hidden="true" className={cn("w-full h-full aspect-square", className)}>
-      <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
+      <Canvas camera={{ position: [0, 0, 4.5], fov: 50 }}>
         <ambientLight intensity={0.15} />
         <directionalLight position={[5, 5, 5]} intensity={1.8} />
         <directionalLight position={[-4, -3, -2]} intensity={0.4} color="#2D6A4F" />
@@ -93,7 +93,7 @@ export function AsciiTorus({ className }: AsciiTorusProps) {
           fgColor="#1C1814"
           bgColor="#F7F4EF"
           characters={" .'`^\",:;Il!i+*=%@#"}
-          resolution={isMobile ? 0.2 : 0.12}
+          resolution={isMobile ? 0.2 : 0.18}
           invert={false}
         />
       </Canvas>
