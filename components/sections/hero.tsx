@@ -43,19 +43,20 @@ export function Hero() {
         label="WITRYNA"
         background="paper"
         transition="hard"
+        compact={true}
         verticalMetaSegments={["KK-01", "WITRYNA", "PRACOWNIA", "WROCŁAW", "2026"]}
       >
         <motion.div {...reveal({ delay: 400, duration: 800 })} />
         <motion.div
-          className="absolute top-4 right-4 md:top-8 md:right-16 z-10 scale-90 md:scale-100"
+          className="absolute top-32 right-4 md:top-40 md:right-16 z-10 scale-90 md:scale-100"
           {...reveal({ delay: 500, duration: 500, scale: 0.9 })}
         >
-          <RoundStamp size="md" topText="K·K" bottomText="Zał. 2026" />
+          <RoundStamp size="sm" topText="K·K" bottomText="Zał. 2026" />
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 max-w-7xl mx-auto items-center min-h-[calc(100vh-20rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 max-w-7xl mx-auto items-center min-h-[calc(100vh-14rem)]">
           <div className="flex flex-col justify-center">
-            <h1 className="fraunces-display text-[clamp(52px,9vw,140px)] leading-[0.95] mt-8 mb-8 text-ink">
+            <h1 className="fraunces-display text-[clamp(44px,7vw,108px)] leading-[0.92] mt-4 mb-6 text-ink">
               <motion.span className="block" {...reveal({ delay: 100, duration: 600, y: 20 })}>
                 Strony,
               </motion.span>
@@ -99,7 +100,7 @@ export function Hero() {
             {...reveal({ delay: 400, duration: 800, scale: 0.95 })}
           >
             <AsciiTorus className="w-full h-full" />
-            <div className="flex items-center justify-center mt-4 font-mono text-[11px] text-earth tracking-wide">
+            <div className="flex items-center justify-center mt-2 font-mono text-[10px] text-earth tracking-wide">
               <span>FIG. 01 · TOROID PARAMETRYCZNY</span>
               <span className="mx-3 opacity-40">·</span>
               <span className="hidden md:block opacity-70 animate-pulse motion-reduce:animate-none">
@@ -122,7 +123,7 @@ export function Hero() {
               behavior: "smooth",
             });
           }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 font-archivo text-[11px] uppercase tracking-[0.12em] text-earth hover:text-stamp transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stamp focus-visible:ring-offset-4 focus-visible:ring-offset-paper rounded-sm p-2"
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 font-archivo text-[11px] uppercase tracking-[0.12em] text-earth hover:text-stamp transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stamp focus-visible:ring-offset-4 focus-visible:ring-offset-paper rounded-sm p-2"
           aria-label="Przewiń do sekcji warsztat"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

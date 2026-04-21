@@ -15,6 +15,7 @@ interface ScrollSectionProps {
   children: ReactNode;
   verticalMetaSegments?: string[];
   showPerforation?: boolean;
+  compact?: boolean;
   className?: string;
 }
 
@@ -27,6 +28,7 @@ export function ScrollSection({
   children,
   verticalMetaSegments,
   showPerforation = true,
+  compact = false,
   className,
 }: ScrollSectionProps) {
   const isDark = background === "navy" || background === "red";
@@ -51,7 +53,12 @@ export function ScrollSection({
         <VerticalMeta segments={verticalMetaSegments} position="right" dark={isDark} />
       ) : null}
 
-      <div className="relative z-10 px-6 md:px-20 pt-16 md:pt-24 pb-24 md:pb-32">
+      <div
+        className={cn(
+          "relative z-10 px-6 md:px-20",
+          compact ? "pt-8 md:pt-12 pb-12 md:pb-16" : "pt-16 md:pt-24 pb-24 md:pb-32"
+        )}
+      >
         <SectionNumber number={number} label={label} dark={isDark} className="mb-12 md:mb-16" />
         {children}
       </div>
