@@ -36,7 +36,7 @@ function TorusKnot() {
   return (
     <mesh ref={meshRef}>
       <torusKnotGeometry args={[1, 0.3, 128, 32, 2, 3]} />
-      <meshStandardMaterial color="#2D6A4F" />
+      <meshPhongMaterial color="#2D6A4F" shininess={80} specular="#ffffff" />
     </mesh>
   );
 }
@@ -85,14 +85,15 @@ export function AsciiTorus({ className }: AsciiTorusProps) {
   return (
     <div aria-hidden="true" className={cn("w-full h-full aspect-square", className)}>
       <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[5, 5, 5]} intensity={1} />
+        <ambientLight intensity={0.15} />
+        <directionalLight position={[5, 5, 5]} intensity={1.8} />
+        <directionalLight position={[-4, -3, -2]} intensity={0.4} color="#2D6A4F" />
         <TorusKnot />
         <AsciiRenderer
           fgColor="#1C1814"
           bgColor="#F7F4EF"
-          characters=" .:-+*=%@#"
-          resolution={isMobile ? 0.2 : 0.15}
+          characters={" .'`^\",:;Il!i+*=%@#"}
+          resolution={isMobile ? 0.2 : 0.12}
           invert={false}
         />
       </Canvas>
