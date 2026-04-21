@@ -61,7 +61,7 @@ export function Hero() {
             <SectionNumber number="01" label="WITRYNA" />
           </motion.div>
 
-          <h1 className="fraunces-display text-[clamp(48px,8vw,120px)] leading-[0.95] mt-8 mb-6 text-ink">
+          <h1 className="fraunces-display text-[clamp(56px,11vw,168px)] leading-[0.92] mt-8 mb-8 tracking-tight text-ink">
             <motion.span className="block" {...reveal({ delay: 100, duration: 600, y: 20 })}>
               Strony,
             </motion.span>
@@ -101,10 +101,10 @@ export function Hero() {
         </div>
 
         <motion.div
-          className="flex flex-col items-center justify-center min-h-[320px] md:min-h-[420px] lg:min-h-[600px]"
+          className="flex flex-col items-center justify-center min-h-[500px] md:min-h-[700px] w-full"
           {...reveal({ delay: 400, duration: 800, scale: 0.95 })}
         >
-          <AsciiTorus className="max-w-sm md:max-w-md" />
+          <AsciiTorus className="w-full h-full" />
           <div className="flex items-center justify-center mt-4 font-mono text-[11px] text-earth tracking-wide">
             <span>FIG. 01 · TOROID PARAMETRYCZNY</span>
             <span className="mx-3 opacity-40">·</span>
