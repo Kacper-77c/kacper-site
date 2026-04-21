@@ -152,7 +152,7 @@ export function AsciiTorus({ className }: AsciiTorusProps) {
   }
 
   return (
-    <div aria-hidden="true" className={cn("w-full h-full aspect-square max-h-[70vh]", className)}>
+    <div aria-hidden="true" className={cn("w-full h-full aspect-square max-h-[60vh]", className)}>
       <Canvas camera={{ position: [0, 0, 4.5], fov: 50 }}>
         <ambientLight intensity={0.15} />
         <directionalLight position={[5, 5, 5]} intensity={1.8} />

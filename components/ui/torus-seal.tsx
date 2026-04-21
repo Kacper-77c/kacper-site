@@ -34,9 +34,9 @@ export function TorusSeal({ className, size = "md", dark = false }: TorusSealPro
   const prefersReducedMotion = useReducedMotion();
 
   const sizeClasses = {
-    sm: "w-24 h-24",
-    md: "w-40 h-40",
-    lg: "w-64 h-64",
+    sm: "w-32 h-32",
+    md: "w-56 h-56",
+    lg: "w-80 h-80",
   };
 
   const fg = dark ? "#F7F4EF" : "#1C1814";
@@ -72,8 +72,8 @@ export function TorusSeal({ className, size = "md", dark = false }: TorusSealPro
         <AsciiRenderer
           fgColor={fg}
           bgColor="transparent"
-          characters=" .:-+*=%@#"
-          resolution={0.16}
+          characters={' .`"^,:;Il!i+*=%@#'}
+          resolution={0.22}
           invert={false}
         />
       </Canvas>

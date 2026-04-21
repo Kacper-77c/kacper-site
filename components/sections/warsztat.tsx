@@ -46,7 +46,7 @@ export function Warsztat() {
       transition="hard"
       verticalMetaSegments={["KK-02", "WARSZTAT", "PRACOWNIA", "WROCŁAW", "2026"]}
     >
-      <div className="absolute top-20 right-8 md:top-28 md:right-20 z-10">
+      <div className="absolute top-16 right-4 md:top-24 md:right-16 z-10 opacity-90">
         <TorusSeal size="md" dark />
       </div>
 

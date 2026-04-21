@@ -53,7 +53,7 @@ export function Hero() {
           <RoundStamp size="md" topText="K·K" bottomText="Zał. 2026" />
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 max-w-7xl mx-auto items-center min-h-[calc(100vh-12rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 max-w-7xl mx-auto items-center min-h-[calc(100vh-20rem)]">
           <div className="flex flex-col justify-center">
             <h1 className="fraunces-display text-[clamp(52px,9vw,140px)] leading-[0.95] mt-8 mb-8 text-ink">
               <motion.span className="block" {...reveal({ delay: 100, duration: 600, y: 20 })}>
