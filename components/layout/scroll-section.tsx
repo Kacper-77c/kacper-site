@@ -31,13 +31,13 @@ export function ScrollSection({
   compact = false,
   className,
 }: ScrollSectionProps) {
-  const isDark = background === "navy" || background === "red";
+  const isDark = background === "navy" || background === "red" || background === "turquoise";
 
   const bgClass = {
     paper: "bg-paper text-ink",
     navy: "bg-matchbox-navy text-paper",
     red: "bg-matchbox-red text-paper",
-    turquoise: "bg-matchbox-turquoise text-ink",
+    turquoise: "bg-matchbox-turquoise text-paper",
   }[background];
 
   return (
