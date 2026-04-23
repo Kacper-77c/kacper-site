@@ -43,7 +43,7 @@ const STEPS = [
   },
 ];
 
-const PIN_VH = 200;
+const PIN_VH = 320;
 const STEP_COUNT = STEPS.length;
 
 export function Metoda() {

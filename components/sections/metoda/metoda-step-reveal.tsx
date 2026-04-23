@@ -118,8 +118,8 @@ export function MetodaStepReveal({
           opacity: 1,
           y: 0,
           filter: "blur(0px)",
-          duration: 0.6,
-          stagger: 0.025,
+          duration: 0.5,
+          stagger: 0.02,
           ease: "power2.out",
           overwrite: "auto",
           delay: stepIndex * 0.01,
@@ -143,8 +143,8 @@ export function MetodaStepReveal({
       ref={containerRef}
       className={cn(
         "absolute inset-0 flex flex-col justify-center",
-        "transition-opacity duration-300",
-        isActive ? "z-10 pointer-events-auto" : "z-0 pointer-events-none",
+        "transition-opacity duration-500",
+        isActive ? "opacity-100 z-10 pointer-events-auto" : "opacity-0 z-0 pointer-events-none",
         className
       )}
     >
