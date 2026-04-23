@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useReducedMotion } from "framer-motion";
 import { gsap, useGSAP, SplitText } from "@/lib/gsap-config";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +34,43 @@ export function MetodaStepReveal({
   const bodyRef = useRef<HTMLParagraphElement>(null);
   const manifestoRef = useRef<HTMLParagraphElement>(null);
   const splitsRef = useRef<SplitText[]>([]);
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return (
+      <div
+        className={cn(
+          "absolute inset-0 flex flex-col justify-center",
+          "transition-opacity duration-500",
+          isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none",
+          className
+        )}
+      >
+        <div className="max-w-2xl">
+          <div className="mb-4 flex items-baseline gap-4">
+            <span className="font-mono text-sm uppercase tracking-[0.14em] text-earth/90">{number}</span>
+            <h3 className="fraunces-display text-[clamp(40px,5vw,80px)] leading-[0.95] text-paper">
+              {title}
+            </h3>
+          </div>
+
+          <p className="fraunces-body mb-8 ml-[calc(2.5rem+1rem)] text-xl text-paper/80 leading-snug md:text-2xl">
+            {subtitle}
+          </p>
+          <p className="fraunces-body mb-6 ml-[calc(2.5rem+1rem)] text-base text-paper/90 leading-relaxed md:text-lg">
+            {body}
+          </p>
+          <p className="fraunces-body mb-8 ml-[calc(2.5rem+1rem)] text-base font-semibold text-paper leading-relaxed md:text-lg">
+            {manifesto}
+          </p>
+          <div className="ml-[calc(2.5rem+1rem)] flex items-center gap-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-earth/80">CZAS</span>
+            <span className="font-archivo text-sm text-paper/70">{duration}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   useGSAP(
     () => {
