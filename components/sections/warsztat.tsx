@@ -48,7 +48,7 @@ export function Warsztat() {
     >
       <div
         ref={containerRef}
-        className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 items-center min-h-[calc(100vh-14rem)]"
+        className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 items-center min-h-fit pb-16 md:pb-24"
       >
         <div className="flex flex-col justify-center max-w-3xl pt-8 md:pt-16">
           <h2

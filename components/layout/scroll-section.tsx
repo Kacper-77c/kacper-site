@@ -40,12 +40,11 @@ export function ScrollSection({
     turquoise: "bg-matchbox-turquoise text-ink",
   }[background];
 
-  const marginClass = transition === "peek" ? "-mt-[8vh]" : "";
-
   return (
     <section
       id={id}
-      className={cn("relative w-full min-h-screen overflow-hidden", bgClass, marginClass, className)}
+      className={cn("relative w-full min-h-screen overflow-hidden", bgClass, className)}
+      style={{ marginTop: transition === "peek" ? "-8vh" : 0 }}
       data-theme={isDark ? "dark" : "light"}
     >
       {showPerforation ? <PerforatedEdge side="left" dark={isDark} /> : null}
