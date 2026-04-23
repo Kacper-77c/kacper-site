@@ -1,9 +1,10 @@
 "use client";
 
-import { motion, useScroll } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { ScrollTrigger, useGSAP } from "@/lib/gsap-config";
 import { ScrollSection } from "@/components/layout/scroll-section";
-import { MetodaStep } from "./metoda/metoda-step";
+import { MetodaStepReveal } from "./metoda/metoda-step-reveal";
 import { GrowingTorus } from "./metoda/growing-torus";
 import { HandUnderline } from "@/components/ui/hand-underline";
 
@@ -42,20 +43,42 @@ const STEPS = [
   },
 ];
 
+const PIN_VH = 200;
+const STEP_COUNT = STEPS.length;
+
 export function Metoda() {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [activeStep, setActiveStep] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const pinContainerRef = useRef<HTMLDivElement>(null);
+  const pinTargetRef = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
+  useGSAP(
+    () => {
+      if (!pinContainerRef.current || !pinTargetRef.current) return;
 
-  useEffect(() => {
-    return scrollYProgress.on("change", (latest) => {
-      setScrollProgress(Math.max(0, Math.min(1, latest)));
-    });
-  }, [scrollYProgress]);
+      const st = ScrollTrigger.create({
+        trigger: pinContainerRef.current,
+        start: "top top",
+        end: `+=${PIN_VH}%`,
+        pin: pinTargetRef.current,
+        pinSpacing: true,
+        scrub: 0.5,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          setScrollProgress(progress);
+          const stepIndex = Math.min(Math.floor(progress * STEP_COUNT), STEP_COUNT - 1);
+          setActiveStep((prev) => (prev !== stepIndex ? stepIndex : prev));
+        },
+      });
+
+      return () => {
+        st.kill();
+      };
+    },
+    {
+      scope: pinContainerRef,
+    }
+  );
 
   return (
     <ScrollSection
@@ -63,55 +86,92 @@ export function Metoda() {
       number="04"
       label="METODA"
       background="turquoise"
-      transition="peek"
+      transition="hard"
       verticalMetaSegments={["KK-04", "METODA", "PRACOWNIA", "WROCŁAW", "2026"]}
     >
-      <div ref={sectionRef}>
-        <motion.div
-          className="max-w-4xl mx-auto mb-16 text-center md:mb-24"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="fraunces-display text-[clamp(40px,6vw,88px)] leading-[0.95] text-paper mb-6">
-            Cztery{" "}
-            <span className="relative inline-block">
-              spokojne
-              <HandUnderline color="earth" delay={800} className="absolute -bottom-1 left-0 w-full" />
-            </span>{" "}
-            kroki.
-          </h2>
-          <p className="fraunces-body text-lg text-paper/80 leading-relaxed max-w-2xl mx-auto md:text-xl">
-            Bez pośpiechu, bez Slack&apos;a o 23:00, bez „szybkich poprawek na jutro".
-          </p>
-        </motion.div>
+      <motion.div
+        className="max-w-4xl mx-auto mb-16 text-center md:mb-24"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+      >
+        <h2 className="fraunces-display text-[clamp(40px,6vw,88px)] leading-[0.95] text-paper mb-6">
+          Cztery{" "}
+          <span className="relative inline-block">
+            spokojne
+            <HandUnderline color="earth" delay={800} className="absolute -bottom-1 left-0 w-full" />
+          </span>{" "}
+          kroki.
+        </h2>
+        <p className="fraunces-body text-lg text-paper/80 leading-relaxed max-w-2xl mx-auto md:text-xl">
+          Bez pośpiechu, bez Slacka o 23:00, bez „szybkich poprawek na jutro".
+        </p>
+      </motion.div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 gap-12 lg:grid-cols-2">
-          <div className="space-y-0">
-            {STEPS.map((step, index) => (
-              <MetodaStep key={step.number} {...step} index={index} />
-            ))}
-          </div>
+      <div ref={pinContainerRef} className="relative" style={{ height: `${PIN_VH + 100}vh` }}>
+        <div ref={pinTargetRef} className="h-screen w-full flex items-center">
+          <div className="hidden lg:grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto w-full h-[80vh]">
+            <div className="relative h-full">
+              {STEPS.map((step, index) => (
+                <MetodaStepReveal
+                  key={step.number}
+                  {...step}
+                  isActive={activeStep === index}
+                  stepIndex={index}
+                />
+              ))}
+            </div>
 
-          <div className="relative hidden lg:block">
-            <div className="sticky top-24 w-full aspect-square max-w-[500px] mx-auto flex items-center justify-center">
-              <GrowingTorus scrollProgress={scrollProgress} className="w-full h-full" />
+            <div className="relative h-full flex items-center justify-center">
+              <div className="w-full aspect-square max-w-[500px]">
+                <GrowingTorus scrollProgress={scrollProgress} className="w-full h-full" />
+              </div>
             </div>
           </div>
-        </div>
 
-        <motion.div
-          className="max-w-7xl mx-auto mt-16 md:mt-24 font-mono text-[10px] uppercase tracking-[0.14em] text-earth/90 flex items-center justify-between"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <span>met. 04 · protokół 2026/I</span>
-          <span>4 kroków · bez pośpiechu</span>
-        </motion.div>
+          <div className="w-full lg:hidden">
+            <MobileMetoda steps={STEPS} />
+          </div>
+        </div>
       </div>
+
+      <motion.div
+        className="max-w-7xl mx-auto mt-16 md:mt-24 font-mono text-[10px] uppercase tracking-[0.14em] text-earth/90 flex items-center justify-between"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      >
+        <span>met. 04 · protokół 2026/I</span>
+        <span>4 kroków · bez pośpiechu</span>
+      </motion.div>
     </ScrollSection>
+  );
+}
+
+function MobileMetoda({ steps }: { steps: typeof STEPS }) {
+  return (
+    <div className="space-y-12 px-6 py-12">
+      {steps.map((step) => (
+        <article key={step.number} className="border-t border-paper/15 pt-8 first:border-t-0 first:pt-0">
+          <div className="flex items-baseline gap-4 mb-2">
+            <span className="font-mono text-sm uppercase tracking-[0.14em] text-earth/90">{step.number}</span>
+            <h3 className="fraunces-display text-[clamp(28px,6vw,44px)] leading-[1.0] text-paper">
+              {step.title}
+            </h3>
+          </div>
+          <p className="fraunces-body text-lg text-paper/80 mb-4">{step.subtitle}</p>
+          <p className="fraunces-body text-base text-paper/90 mb-4 leading-relaxed">{step.body}</p>
+          <p className="fraunces-body text-base text-paper font-semibold mb-4 leading-relaxed">
+            {step.manifesto}
+          </p>
+          <div className="flex items-center gap-3 pt-4 border-t border-paper/10">
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-earth/80">CZAS</span>
+            <span className="font-archivo text-sm text-paper/70">{step.duration}</span>
+          </div>
+        </article>
+      ))}
+    </div>
   );
 }
