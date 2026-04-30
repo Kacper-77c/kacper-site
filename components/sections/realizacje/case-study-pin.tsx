@@ -217,31 +217,38 @@ export function CaseStudyPin({ data }: CaseStudyPinProps) {
           </div>
         </div>
 
-        <Link href={`/portfolio/${data.slug}`} className="block space-y-6">
-          <div className="flex justify-center">
+        <Link href={`/portfolio/${data.slug}`} className="block">
+          <div className="flex flex-col gap-8">
+            <div className="w-full">
             <DeviceFrame
               type="desktop"
               src={data.screens.desktop}
               alt={`${data.title} desktop`}
+              className="max-w-none"
               placeholderText={data.placeholders?.desktop.text}
               placeholderGradient={data.placeholders?.desktop.gradient}
             />
-          </div>
-          <div className="flex justify-center gap-4">
+            </div>
+            <div className="mx-auto w-[70%]">
             <DeviceFrame
               type="tablet"
               src={data.screens.tablet}
               alt={`${data.title} tablet`}
+              className="max-w-none"
               placeholderText={data.placeholders?.tablet.text}
               placeholderGradient={data.placeholders?.tablet.gradient}
             />
+            </div>
+            <div className="mx-auto w-[45%]">
             <DeviceFrame
               type="phone"
               src={data.screens.phone}
               alt={`${data.title} phone`}
+              className="max-w-none"
               placeholderText={data.placeholders?.phone.text}
               placeholderGradient={data.placeholders?.phone.gradient}
             />
+            </div>
           </div>
         </Link>
 
