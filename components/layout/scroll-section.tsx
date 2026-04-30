@@ -10,7 +10,7 @@ interface ScrollSectionProps {
   id: string;
   number: string;
   label: string;
-  background: "paper" | "navy" | "red" | "turquoise";
+  background: "paper" | "navy" | "red" | "turquoise" | "ink";
   transition?: "hard" | "peek";
   children: ReactNode;
   verticalMetaSegments?: string[];
@@ -31,13 +31,18 @@ export function ScrollSection({
   compact = false,
   className,
 }: ScrollSectionProps) {
-  const isDark = background === "navy" || background === "red" || background === "turquoise";
+  const isDark =
+    background === "navy" ||
+    background === "red" ||
+    background === "turquoise" ||
+    background === "ink";
 
   const bgClass = {
     paper: "bg-paper text-ink",
     navy: "bg-matchbox-navy text-paper",
     red: "bg-matchbox-red text-paper",
     turquoise: "bg-matchbox-turquoise text-paper",
+    ink: "bg-[#0a0a0a] text-paper",
   }[background];
 
   return (
