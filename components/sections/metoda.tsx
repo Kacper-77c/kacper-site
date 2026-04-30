@@ -54,6 +54,7 @@ export function Metoda() {
 
   useGSAP(
     () => {
+      if (typeof window !== "undefined" && window.innerWidth < 1024) return;
       if (!pinContainerRef.current || !pinTargetRef.current) return;
 
       const st = ScrollTrigger.create({
@@ -109,31 +110,31 @@ export function Metoda() {
         </p>
       </motion.div>
 
-      <div ref={pinContainerRef} className="relative" style={{ height: `${PIN_VH + 100}vh` }}>
-        <div ref={pinTargetRef} className="h-screen w-full flex items-center">
-          <div className="hidden lg:grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto w-full h-[80vh]">
-            <div className="relative h-full">
-              {STEPS.map((step, index) => (
-                <MetodaStepReveal
-                  key={step.number}
-                  {...step}
-                  isActive={activeStep === index}
-                  stepIndex={index}
-                />
-              ))}
-            </div>
-
-            <div className="relative h-full flex items-center justify-center">
-              <div className="w-full aspect-square max-w-[500px]">
-                <GrowingTorus scrollProgress={scrollProgress} className="w-full h-full" />
+      <div className="hidden lg:block">
+        <div ref={pinContainerRef} className="relative" style={{ height: `${PIN_VH + 100}vh` }}>
+          <div ref={pinTargetRef} className="h-screen w-full flex items-center">
+            <div className="lg:grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto w-full h-[80vh]">
+              <div className="relative h-full">
+                {STEPS.map((step, index) => (
+                  <MetodaStepReveal
+                    key={step.number}
+                    {...step}
+                    isActive={activeStep === index}
+                    stepIndex={index}
+                  />
+                ))}
+              </div>
+              <div className="relative h-full flex items-center justify-center">
+                <div className="w-full aspect-square max-w-[500px]">
+                  <GrowingTorus scrollProgress={scrollProgress} className="w-full h-full" />
+                </div>
               </div>
             </div>
           </div>
-
-          <div className="w-full lg:hidden">
-            <MobileMetoda steps={STEPS} />
-          </div>
         </div>
+      </div>
+      <div className="w-full lg:hidden">
+        <MobileMetoda steps={STEPS} />
       </div>
 
       <motion.div
@@ -156,7 +157,9 @@ function MobileMetoda({ steps }: { steps: typeof STEPS }) {
       {steps.map((step) => (
         <article key={step.number} className="border-t border-paper/15 pt-8 first:border-t-0 first:pt-0">
           <div className="flex items-baseline gap-4 mb-2">
-            <span className="font-mono text-sm uppercase tracking-[0.14em] text-earth/90">{step.number}</span>
+            <span className="font-mono text-base uppercase tracking-[0.14em] text-earth/90">
+              {step.number}
+            </span>
             <h3 className="fraunces-display text-[clamp(28px,6vw,44px)] leading-[1.0] text-paper">
               {step.title}
             </h3>
