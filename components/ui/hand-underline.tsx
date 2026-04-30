@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface HandUnderlineProps {
-  color?: "stamp" | "earth" | "ink";
+  color?: "stamp" | "earth" | "ink" | "paper";
   delay?: number;
   className?: string;
 }
@@ -13,6 +13,7 @@ const colorMap: Record<NonNullable<HandUnderlineProps["color"]>, string> = {
   stamp: "var(--color-stamp)",
   earth: "var(--color-earth)",
   ink: "var(--color-ink)",
+  paper: "var(--color-paper)",
 };
 
 export function HandUnderline({
