@@ -24,6 +24,8 @@
   --font-fraunces: var(--font-fraunces);
   --font-archivo: var(--font-archivo);
   --font-plex-mono: var(--font-plex-mono);
+  --font-display: var(--font-fraunces);
+  --font-mono: var(--font-plex-mono);
 }
 
 @layer base {
