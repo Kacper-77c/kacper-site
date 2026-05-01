@@ -1,103 +1,132 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { AsciiRenderer } from "@react-three/drei";
+import { useReducedMotion } from "framer-motion";
 import * as THREE from "three";
-import type { MutableRefObject } from "react";
+import { cn } from "@/lib/utils";
 
 interface ClosingTorusProps {
-  progressRef: MutableRefObject<{ value: number }>;
+  scrollProgress: number;
+  className?: string;
 }
 
-const PROGRESS_THROTTLE = 0.02;
-const SPHERE_THRESHOLD = 0.96;
-const SPHERE_START_R = 0.10;
-const SPHERE_END_R = 0.05;
-
 function easedProgress(raw: number): number {
+  // slow start, dramatic end
   return raw < 0.5 ? 2 * raw * raw : 1 - Math.pow(-2 * raw + 2, 2) / 2;
 }
 
-function TorusInner({ progressRef }: ClosingTorusProps) {
+function getTorusKnotParams(progress: number) {
+  const p = Math.max(0, Math.min(1, progress));
+  const eased = easedProgress(p);
+  return {
+    radius: THREE.MathUtils.lerp(1.0, 0.15, eased),
+    tube: THREE.MathUtils.lerp(0.4, 0.04, eased),
+    tubularSegments: Math.floor(THREE.MathUtils.lerp(128, 32, eased)),
+    radialSegments: Math.floor(THREE.MathUtils.lerp(32, 8, eased)),
+  };
+}
+
+function TorusKnotMesh({ scrollProgress }: { scrollProgress: number }) {
   const meshRef = useRef<THREE.Mesh>(null);
-  const lastProgressRef = useRef(-1);
-  const initialGeometry = useMemo(
-    () => new THREE.TorusGeometry(1.0, 0.4, 32, 100),
-    []
-  );
+  const lastRebuildProgress = useRef(0);
+  const [currentParams, setCurrentParams] = useState(() => getTorusKnotParams(0));
+  const geometryRef = useRef<THREE.TorusKnotGeometry | null>(null);
+
+  useEffect(() => {
+    const diff = Math.abs(scrollProgress - lastRebuildProgress.current);
+    if (diff >= 0.02) {
+      lastRebuildProgress.current = scrollProgress;
+      setCurrentParams(getTorusKnotParams(scrollProgress));
+    }
+  }, [scrollProgress]);
+
+  const geometry = useMemo(() => {
+    if (geometryRef.current) {
+      geometryRef.current.dispose();
+    }
+    const geo = new THREE.TorusKnotGeometry(
+      currentParams.radius,
+      currentParams.tube,
+      currentParams.tubularSegments,
+      currentParams.radialSegments,
+      2,
+      3
+    );
+    geometryRef.current = geo;
+    return geo;
+  }, [currentParams]);
+
+  useEffect(() => {
+    return () => {
+      if (geometryRef.current) {
+        geometryRef.current.dispose();
+      }
+    };
+  }, []);
 
   useFrame((_, delta) => {
     if (!meshRef.current) return;
-
-    const rawProgress = progressRef.current.value;
-    const clampedProgress = THREE.MathUtils.clamp(rawProgress, 0, 1);
-    const throttledProgress =
-      Math.floor(clampedProgress / PROGRESS_THROTTLE) * PROGRESS_THROTTLE;
-
-    if (
-      Math.abs(throttledProgress - lastProgressRef.current) >= PROGRESS_THROTTLE
-    ) {
-      lastProgressRef.current = throttledProgress;
-
-      meshRef.current.geometry.dispose();
-
-      if (throttledProgress >= SPHERE_THRESHOLD) {
-        // Sphere phase — lerp from matched-torus size to final dot
-        const sphereProgress =
-          (throttledProgress - SPHERE_THRESHOLD) / (1 - SPHERE_THRESHOLD);
-        const sphereR = THREE.MathUtils.lerp(
-          SPHERE_START_R,
-          SPHERE_END_R,
-          sphereProgress
-        );
-        meshRef.current.geometry = new THREE.SphereGeometry(sphereR, 32, 32);
-      } else {
-        // Torus phase — shrinking morph
-        const eased = easedProgress(throttledProgress);
-        const majorR = THREE.MathUtils.lerp(1.0, 0.05, eased);
-        const minorR = THREE.MathUtils.lerp(0.4, 0.05, eased);
-        meshRef.current.geometry = new THREE.TorusGeometry(majorR, minorR, 32, 100);
-      }
-    }
-
     meshRef.current.rotation.x += delta * 0.15;
     meshRef.current.rotation.y += delta * 0.2;
   });
 
-  const rootStyles =
-    typeof window !== "undefined" ? getComputedStyle(document.documentElement) : null;
-  const paperColor =
-    rootStyles?.getPropertyValue("--color-paper").trim() || "white";
-
   return (
-    <mesh ref={meshRef} geometry={initialGeometry}>
-      <meshStandardMaterial
-        color={paperColor}
-        roughness={0.4}
-        metalness={0.1}
-        emissive={paperColor}
-        emissiveIntensity={0.05}
+    <mesh ref={meshRef} geometry={geometry}>
+      <meshPhongMaterial
+        color="#2D6A4F"
+        shininess={80}
+        specular={new THREE.Color("#ffffff")}
       />
     </mesh>
   );
 }
 
-export default function ClosingTorus({ progressRef }: ClosingTorusProps) {
-  const rootStyles =
-    typeof window !== "undefined" ? getComputedStyle(document.documentElement) : null;
-  const scenicColor =
-    rootStyles?.getPropertyValue("--color-scenic").trim() || "slateblue";
+export function ClosingTorus({ scrollProgress, className }: ClosingTorusProps) {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return (
+      <div className={cn("w-full h-full flex items-center justify-center", className)}>
+        <pre className="font-mono text-[0.6rem] leading-none text-paper/80">
+{`     .::=**##%%@@##**=::.
+   :=*#%@@@@@@@@@@@@@@%#*=:
+ =#@@@@%#==-::::--==#%@@@@#=
+#@@@%+.                  .+%@@@#
+ =#@@@@%#==-::::--==#%@@@@#=
+   :=*#%@@@@@@@@@@@@@@%#*=:
+     .::=**##%%@@##**=::.     `}
+        </pre>
+      </div>
+    );
+  }
 
   return (
-    <Canvas
-      camera={{ position: [0, 0, 4], fov: 45 }}
-      dpr={[1, 2]}
-      gl={{ antialias: true, alpha: true }}
-    >
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 5, 5]} intensity={0.8} />
-      <directionalLight position={[-3, -2, -3]} intensity={0.3} color={scenicColor} />
-      <TorusInner progressRef={progressRef} />
-    </Canvas>
+    <div className={cn("w-full h-full", className)}>
+      <Canvas
+        camera={{ position: [0, 0, 4.5], fov: 50 }}
+        gl={{
+          alpha: true,
+          antialias: true,
+          powerPreference: "low-power",
+        }}
+      >
+        <ambientLight intensity={0.2} />
+        <directionalLight position={[5, 5, 5]} intensity={1.8} />
+        <directionalLight position={[-4, -3, -2]} intensity={0.4} color="#2D6A4F" />
+        <TorusKnotMesh scrollProgress={scrollProgress} />
+        <AsciiRenderer
+          fgColor="#F7F4EF"
+          bgColor="transparent"
+          characters={' .`"^,:;Il!i+*=%@#'}
+          resolution={0.18}
+          invert={false}
+        />
+      </Canvas>
+    </div>
   );
 }
+
+// Default export for backward compatibility (jeśli inne pliki importują default)
+export default ClosingTorus;
