@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ScrollSection } from "@/components/layout/scroll-section";
 import { HandUnderline } from "@/components/ui/hand-underline";
+import { SectionBridge } from "@/components/ui/section-bridge";
 import { CaseStudyPin } from "./realizacje/case-study-pin";
 import { CaseStudyRevealTorus } from "./realizacje/case-study-reveal-torus";
 
@@ -109,6 +110,12 @@ export function Realizacje() {
         <span>kat. 05 · realizacje 2026/I</span>
         <span>2 z ∞ · w pracowni</span>
       </motion.div>
+      <SectionBridge
+        nextNumber="06"
+        nextLabel="ZAMÓWIENIE"
+        nextDescription="kontakt"
+        variant="dark"
+      />
     </ScrollSection>
   );
 }

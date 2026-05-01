@@ -7,6 +7,7 @@ import { ScrollSection } from "@/components/layout/scroll-section";
 import { MetodaStepReveal } from "./metoda/metoda-step-reveal";
 import { GrowingTorus } from "./metoda/growing-torus";
 import { HandUnderline } from "@/components/ui/hand-underline";
+import { SectionBridge } from "@/components/ui/section-bridge";
 
 const STEPS = [
   {
@@ -147,6 +148,12 @@ export function Metoda() {
         <span>met. 04 · protokół 2026/I</span>
         <span>4 kroków · bez pośpiechu</span>
       </motion.div>
+      <SectionBridge
+        nextNumber="05"
+        nextLabel="REALIZACJE"
+        nextDescription="projekty"
+        variant="dark"
+      />
     </ScrollSection>
   );
 }

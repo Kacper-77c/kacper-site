@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ScrollSection } from "@/components/layout/scroll-section";
 import { ServiceCard } from "./katalog/service-card";
 import { HandUnderline } from "@/components/ui/hand-underline";
+import { SectionBridge } from "@/components/ui/section-bridge";
 
 const SERVICES = [
   {
@@ -100,6 +101,12 @@ export function Katalog() {
         <span>kat. 03 · wydanie 2026/I</span>
         <span>egz. 1/∞ · pn-26</span>
       </motion.div>
+      <SectionBridge
+        nextNumber="04"
+        nextLabel="METODA"
+        nextDescription="cztery kroki"
+        variant="light"
+      />
     </ScrollSection>
   );
 }

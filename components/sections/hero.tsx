@@ -6,6 +6,7 @@ import { ScrollSection } from "@/components/layout/scroll-section";
 import { AsciiTorus } from "@/components/ui/ascii-torus";
 import { HandUnderline } from "@/components/ui/hand-underline";
 import { RoundStamp } from "@/components/ui/round-stamp";
+import { SectionBridge } from "@/components/ui/section-bridge";
 import { StampButton } from "@/components/ui/stamp-button";
 
 type RevealConfig = {
@@ -136,6 +137,12 @@ export function Hero() {
             ↓
           </motion.span>
         </motion.button>
+        <SectionBridge
+          nextNumber="02"
+          nextLabel="WARSZTAT"
+          nextDescription="o mnie"
+          variant="light"
+        />
       </ScrollSection>
     </>
   );

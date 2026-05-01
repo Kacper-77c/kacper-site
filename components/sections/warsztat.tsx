@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSection } from "@/components/layout/scroll-section";
 import { HandUnderline } from "@/components/ui/hand-underline";
+import { SectionBridge } from "@/components/ui/section-bridge";
 import { TerminalLog } from "./warsztat/terminal-log";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -104,6 +105,12 @@ export function Warsztat() {
           <TerminalLog />
         </motion.div>
       </div>
+      <SectionBridge
+        nextNumber="03"
+        nextLabel="KATALOG"
+        nextDescription="trzy usługi"
+        variant="dark"
+      />
     </ScrollSection>
   );
 }
