@@ -12,7 +12,6 @@ export default function PostPinReveal() {
   const emailRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
   const colophonRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
@@ -22,10 +21,6 @@ export default function PostPinReveal() {
         [accentRef.current, emailRef.current, buttonRef.current, colophonRef.current],
         { opacity: 0, y: 16 }
       );
-      gsap.set(lineRef.current, {
-        scaleX: 0,
-        transformOrigin: "left center",
-      });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -55,11 +50,6 @@ export default function PostPinReveal() {
           colophonRef.current,
           { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
           "+=0.4"
-        )
-        .to(
-          lineRef.current,
-          { scaleX: 1, duration: 0.8, ease: "power3.out" },
-          "+=0.2"
         );
 
       return () => {
@@ -116,12 +106,6 @@ export default function PostPinReveal() {
         </div>
       </div>
 
-      {/* Visual full-stop — matchbox-red line, full bleed */}
-      <div
-        ref={lineRef}
-        className="absolute bottom-0 left-0 right-0 h-px bg-matchbox-red"
-        style={{ willChange: "transform" }}
-      />
     </div>
   );
 }
