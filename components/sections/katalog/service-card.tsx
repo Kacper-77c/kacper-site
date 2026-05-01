@@ -95,9 +95,7 @@ export function ServiceCard({
           variant="secondary"
           className="w-full justify-center"
           onClick={() => {
-            document.getElementById("zamowienie")?.scrollIntoView({
-              behavior: "smooth",
-            });
+            document.getElementById("zamowienie")?.scrollIntoView();
           }}
         >
           Umów rozmowę →

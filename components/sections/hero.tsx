@@ -119,9 +119,7 @@ export function Hero() {
         </motion.div>
         <motion.button
           onClick={() => {
-            document.getElementById("warsztat")?.scrollIntoView({
-              behavior: "smooth",
-            });
+            document.getElementById("warsztat")?.scrollIntoView();
           }}
           className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 font-archivo text-[11px] uppercase tracking-[0.12em] text-earth hover:text-stamp transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stamp focus-visible:ring-offset-4 focus-visible:ring-offset-paper rounded-sm p-2"
           aria-label="Przewiń do sekcji warsztat"
