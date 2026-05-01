@@ -28,7 +28,7 @@ export function PerforatedEdge({
       className={cn("hidden md:flex pointer-events-none z-10", sideClasses[side], className)}
     >
       {dots.map((_, index) => (
-        <span key={index} className={cn("h-1 w-1 rounded-full", dark ? "bg-paper/30" : "bg-earth/40")} />
+        <span key={index} className={cn("h-1 w-1 rounded-full", dark ? "bg-paper/15" : "bg-earth/40")} />
       ))}
     </div>
   );
