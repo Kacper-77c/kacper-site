@@ -72,18 +72,18 @@ export default function PostPinReveal() {
   return (
     <div
       ref={containerRef}
-      className="relative bg-matchbox-navy text-paper py-32 px-6 md:px-20"
+      className="relative bg-matchbox-navy text-paper pt-12 pb-16 px-6 md:px-20"
     >
       {/* Mini ASCII torus knot accent — top right */}
       <div
         ref={accentRef}
-        className="absolute top-12 right-6 md:right-20 w-16 h-16 opacity-70"
+        className="absolute top-8 right-6 md:right-20 w-16 h-16 opacity-70"
       >
         <ClosingTorus scrollProgress={1.0} className="w-full h-full" />
       </div>
 
       {/* Editorial spread — email/button left, colophon right */}
-      <div className="container mx-auto max-w-5xl">
+      <div className="container mx-auto max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-end">
           {/* Email + Button — 7 cols */}
           <div className="lg:col-span-7 flex flex-col gap-6">
@@ -101,12 +101,15 @@ export default function PostPinReveal() {
             </div>
           </div>
 
-          {/* Colophon — 5 cols, right-aligned */}
+          {/* Colophon — 5 cols, right-aligned (with meta line as first row) */}
           <div
             ref={colophonRef}
-            className="lg:col-span-5 font-mono text-sm text-earth/70 leading-relaxed lg:text-right"
+            className="lg:col-span-5 font-mono text-sm text-earth/70 leading-relaxed lg:text-right space-y-1"
             style={{ willChange: "transform, opacity" }}
           >
+            <p className="text-[10px] uppercase tracking-[0.14em] text-earth/90 mb-3">
+              zam. 06 · protokół 2026/I
+            </p>
             <p>Odpisuję w 24 godziny.</p>
             <p>Wrocław · pracownia · 2026.</p>
           </div>
