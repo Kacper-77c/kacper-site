@@ -3,12 +3,12 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap-config";
 import TypedEmail from "./TypedEmail";
-import KropkaPieczec from "./KropkaPieczec";
+import { ClosingTorus } from "./ClosingTorus";
 import MagneticButton from "@/components/shared/MagneticButton";
 
 export default function PostPinReveal() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const kropkaRef = useRef<HTMLDivElement>(null);
+  const accentRef = useRef<HTMLDivElement>(null);
   const emailRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
   const colophonRef = useRef<HTMLDivElement>(null);
@@ -19,11 +19,8 @@ export default function PostPinReveal() {
       if (!containerRef.current) return;
 
       gsap.set(
-        [kropkaRef.current, emailRef.current, buttonRef.current, colophonRef.current],
-        {
-          opacity: 0,
-          y: 16,
-        }
+        [accentRef.current, emailRef.current, buttonRef.current, colophonRef.current],
+        { opacity: 0, y: 16 }
       );
       gsap.set(lineRef.current, {
         scaleX: 0,
@@ -38,8 +35,12 @@ export default function PostPinReveal() {
         },
       });
 
-      tl.to(kropkaRef.current, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" })
-        .to(emailRef.current, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, "+=0.4")
+      tl.to(accentRef.current, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" })
+        .to(
+          emailRef.current,
+          { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+          "+=0.4"
+        )
         .to(
           buttonRef.current,
           {
@@ -55,37 +56,67 @@ export default function PostPinReveal() {
           { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
           "+=0.4"
         )
-        .to(lineRef.current, { scaleX: 1, duration: 0.8, ease: "power3.out" }, "+=0.2");
+        .to(
+          lineRef.current,
+          { scaleX: 1, duration: 0.8, ease: "power3.out" },
+          "+=0.2"
+        );
 
-      return () => tl.kill();
+      return () => {
+        tl.kill();
+      };
     },
     { scope: containerRef }
   );
 
   return (
-    <div ref={containerRef} className="relative bg-matchbox-navy text-paper py-32 px-16">
-      <div ref={kropkaRef} className="absolute top-12 right-16">
-        <KropkaPieczec />
+    <div
+      ref={containerRef}
+      className="relative bg-matchbox-navy text-paper py-32 px-6 md:px-20"
+    >
+      {/* Mini ASCII torus knot accent — top right */}
+      <div
+        ref={accentRef}
+        className="absolute top-12 right-6 md:right-20 w-16 h-16 opacity-70"
+      >
+        <ClosingTorus scrollProgress={1.0} className="w-full h-full" />
       </div>
 
-      <div className="max-w-3xl mx-auto flex flex-col gap-12">
-        <div ref={emailRef} className="font-mono text-2xl xl:text-3xl text-paper">
-          <TypedEmail email="kacper@kacperkrawczyk.pl" />
-        </div>
+      {/* Editorial spread — email/button left, colophon right */}
+      <div className="container mx-auto max-w-5xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-end">
+          {/* Email + Button — 7 cols */}
+          <div className="lg:col-span-7 flex flex-col gap-6">
+            <div
+              ref={emailRef}
+              className="font-mono text-xl md:text-2xl lg:text-3xl text-paper"
+              style={{ willChange: "transform, opacity" }}
+            >
+              <TypedEmail email="kacper@kacperkrawczyk.pl" />
+            </div>
+            <div ref={buttonRef} style={{ willChange: "transform, opacity" }}>
+              <MagneticButton href="mailto:kacper@kacperkrawczyk.pl">
+                NAPISZ →
+              </MagneticButton>
+            </div>
+          </div>
 
-        <div ref={buttonRef} style={{ willChange: "transform, opacity" }}>
-          <MagneticButton href="mailto:kacper@kacperkrawczyk.pl">NAPISZ →</MagneticButton>
-        </div>
-
-        <div ref={colophonRef} className="font-mono text-sm text-earth/80 leading-relaxed mt-12">
-          <p>Odpisuję w 24 godziny.</p>
-          <p>Wrocław · pracownia · 2026.</p>
+          {/* Colophon — 5 cols, right-aligned */}
+          <div
+            ref={colophonRef}
+            className="lg:col-span-5 font-mono text-sm text-earth/70 leading-relaxed lg:text-right"
+            style={{ willChange: "transform, opacity" }}
+          >
+            <p>Odpisuję w 24 godziny.</p>
+            <p>Wrocław · pracownia · 2026.</p>
+          </div>
         </div>
       </div>
 
+      {/* Visual full-stop — matchbox-red line, full bleed */}
       <div
         ref={lineRef}
-        className="absolute bottom-12 left-16 right-16 h-px bg-matchbox-red"
+        className="absolute bottom-0 left-0 right-0 h-px bg-matchbox-red"
         style={{ willChange: "transform" }}
       />
     </div>
