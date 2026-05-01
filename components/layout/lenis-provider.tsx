@@ -21,7 +21,11 @@ export function LenisProvider() {
 
     // GSAP ScrollTrigger integration
     // Lenis jest źródłem prawdy o scroll, ScrollTrigger podpina się pod nie
-    lenis.on("scroll", ScrollTrigger.update);
+    lenis.on("scroll", () => {
+      ScrollTrigger.update();
+      // Emit native scroll event dla Framer Motion useScroll
+      window.dispatchEvent(new Event("scroll"));
+    });
 
     const tickerCallback = (time: number) => {
       lenis.raf(time * 1000);
